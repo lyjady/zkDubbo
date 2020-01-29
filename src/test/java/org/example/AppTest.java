@@ -8,7 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.TreeSet;
+import java.util.stream.Stream;
 
 public class AppTest {
 
@@ -104,7 +108,18 @@ public class AppTest {
      */
     @Test
     public void getChildrenNode() throws KeeperException, InterruptedException {
-        List<String> children = zooKeeper.getChildren("/Spring", false);
+        List<String> children = zooKeeper.getChildren("/", false);
         children.forEach(System.out::println);
+    }
+
+    @Test
+    public void treeSet() {
+        Stream<String> stream = Stream.of("Java", "Python", "C#", "GoLand", "JavaScript", "ErLand", "Shell");
+        ArrayList<String> langs = stream.collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+        TreeSet<String> set = langs.stream().collect(TreeSet::new, TreeSet::add, TreeSet::addAll);
+        System.out.println(set.first());
+        System.out.println(set.last());
+        System.out.println(set.lower("C#"));
+        System.out.println(set.lower("JavaScript"));
     }
 }
